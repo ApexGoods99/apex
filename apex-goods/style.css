@@ -1,0 +1,110 @@
+/*
+  style.css — Midnight Luxury theme (mobile-first)
+  - CSS Variables for theme control
+  - Frosted glass cards and electric-blue accents
+  - Well-commented for scalability
+*/
+
+:root{
+  /* Color palette: adjust here to recolor the entire site */
+  --bg: #081323;              /* deep slate background */
+  --surface: rgba(255,255,255,0.02); /* subtle surface overlay */
+  --muted: #9bb0c9;          /* muted text */
+  --text: #e9f5ff;           /* primary text */
+  --accent: #2bd0ff;         /* electric blue accent */
+  --accent-2: #6ea8ff;       /* secondary blue gradient */
+  --glass: rgba(255,255,255,0.04); /* frosted card background */
+  --radius: 12px;
+  --container: 1100px;
+  --gap: 20px;
+  --shadow: 0 8px 30px rgba(2,6,23,0.6);
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Reset and base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background: linear-gradient(180deg,var(--bg), #04060a);
+  color:var(--text);
+  line-height:1.5;
+  font-size:16px;
+}
+
+.container{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:28px 20px;
+}
+
+/* Header */
+.site-header{
+  position:sticky; top:0; z-index:20;
+  background: linear-gradient(180deg, rgba(2,6,23,0.28), transparent);
+  border-bottom:1px solid rgba(255,255,255,0.02);
+  backdrop-filter: blur(6px);
+}
+.header-inner{ display:flex; align-items:center; justify-content:space-between; }
+.logo{ color:var(--text); text-decoration:none; display:inline-flex; align-items:center }
+.logo svg{ display:block; color:var(--accent); }
+
+.site-nav a{ color:var(--muted); margin-left:18px; text-decoration:none; font-weight:600; font-size:0.95rem }
+.site-nav a:hover{ color:var(--text) }
+
+/* Hero - mobile first */
+.hero{ padding:48px 0 36px; }
+.hero-inner{ text-align:left; max-width:720px; }
+.hero h1{ font-size:1.6rem; margin:0 0 8px; letter-spacing:0.2px }
+.lead{ color:var(--muted); margin:0 0 16px }
+.hero-ctas .btn{ margin-right:10px }
+
+/* Buttons */
+.btn{ display:inline-block; padding:10px 16px; border-radius:10px; text-decoration:none; font-weight:700; font-size:0.95rem; border:none; cursor:pointer }
+.btn.primary{ background: linear-gradient(90deg,var(--accent), var(--accent-2)); color:#02121b; box-shadow: 0 8px 28px rgba(43,208,255,0.12) }
+.btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--text) }
+
+/* Services grid */
+.services .section-note{ color:var(--muted); margin-top:6px }
+.grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); margin-top:18px }
+.card{
+  background: var(--glass);
+  border:1px solid rgba(255,255,255,0.03);
+  padding:18px; border-radius:12px; box-shadow:var(--shadow);
+  backdrop-filter: blur(8px); /* frosted glass effect */
+}
+.card h3{ margin:0 0 8px }
+.card p{ margin:0; color:var(--muted) }
+
+/* About & Contact spacing */
+.about, .contact{ margin-top:28px }
+.contact-form{ display:flex; flex-direction:column; gap:10px; margin-top:12px }
+.contact-form input, .contact-form textarea{
+  padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background: rgba(255,255,255,0.02); color:var(--text)
+}
+.contact-form button{ align-self:flex-start }
+
+.site-footer{ border-top:1px solid rgba(255,255,255,0.02); padding:20px 0; margin-top:36px; color:var(--muted) }
+.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px }
+.footer-nav a{ color:var(--muted); margin-left:12px; text-decoration:none }
+
+/* Accessibility helper */
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0 }
+
+/* Larger screens: enhance layout */
+@media (min-width:700px){
+  .hero h1{ font-size:2rem }
+  .grid{ grid-template-columns:repeat(2, 1fr) }
+}
+
+@media (min-width:1000px){
+  .hero{ padding:80px 0 60px }
+  .hero h1{ font-size:2.6rem }
+  .grid{ grid-template-columns:repeat(4, 1fr) }
+  .footer-inner{ align-items:center }
+}
+
+/* End of stylesheet - change :root variables to rebrand colors quickly */

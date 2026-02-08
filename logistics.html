@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Goods | Logistics</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; background: #0f172a; color: #fff; padding: 2rem; }
+        .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .back { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        .header { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .map-placeholder { background: #1e293b; height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #94a3b8; border: 1px dashed rgba(255,255,255,0.2); margin-bottom: 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .shipment-card { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+        h3 { color: #38bdf8; margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+        .meta { color: #94a3b8; font-size: 0.8rem; margin-bottom: 1rem; display: block; }
+        .status-transit { color: #fbbf24; background: rgba(245, 158, 11, 0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; }
+        .status-delivered { color: #34d399; background: rgba(16, 185, 129, 0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="portal.html" class="back">&larr; BACK TO PORTAL</a>
+        <div style="font-weight: bold;">GLOBAL LOGISTICS</div>
+    </div>
+
+    <div class="header">
+        <h1 style="margin: 0; font-size: 1.5rem;">Supply Chain Tracking</h1>
+        <p style="color: #94a3b8; margin: 0.5rem 0 0 0;">Live shipment monitoring</p>
+    </div>
+
+    <div class="map-placeholder">
+        [ GLOBAL SHIPMENT MAP ONLINE ]
+    </div>
+
+    <div class="grid">
+        <div class="shipment-card">
+            <h3>Shipment #US-8921</h3>
+            <span class="meta">Los Angeles &rarr; Tokyo</span>
+            <span class="status-transit">IN TRANSIT</span>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Arriving in 14 hours via Air Cargo.</p>
+        </div>
+        <div class="shipment-card">
+            <h3>Shipment #EU-4402</h3>
+            <span class="meta">Berlin &rarr; London</span>
+            <span class="status-delivered">DELIVERED</span>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Signed by: J. Smith at 09:42 AM.</p>
+        </div>
+        <div class="shipment-card">
+            <h3>Shipment #MX-1109</h3>
+            <span class="meta">Mexico City &rarr; San Diego</span>
+            <span class="status-transit">CUSTOMS CLEARANCE</span>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Processing at border facility.</p>
+        </div>
+    </div>
+</body>
+</html>

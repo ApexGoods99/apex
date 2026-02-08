@@ -10,10 +10,24 @@
         .logo { font-weight: 800; letter-spacing: -1px; font-size: 1.5rem; }
         .logout { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 2rem; border-radius: 12px; transition: 0.3s; }
-        .card:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
-        h3 { color: #38bdf8; margin-top: 0; }
-        p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; }
+        
+        /* CARD STYLES */
+        .card { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            transition: 0.3s; 
+            text-decoration: none;
+            display: block; 
+            color: inherit;
+        }
+        .card:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); border-color: #38bdf8; }
+        
+        h3 { color: #38bdf8; margin-top: 0; margin-bottom: 0.5rem; }
+        p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin: 0; }
+        
+        /* STATUS LIGHTS */
         .status { display: inline-block; padding: 4px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.7rem; margin-bottom: 1rem; }
     </style>
 </head>
@@ -25,21 +39,25 @@
     <div style="max-width: 1200px; margin: 0 auto;">
         <h2 style="margin-bottom: 2rem; font-weight: 400; color: #94a3b8;">SYSTEM STATUS: <span style="color:#fff;">ONLINE</span></h2>
         <div class="grid">
+            
             <div class="card">
                 <span class="status">ACTIVE</span>
                 <h3>Global Logistics</h3>
                 <p>Real-time tracking of supply chain assets and inventory movement across regional hubs.</p>
             </div>
+            
             <div class="card">
                 <span class="status">ACTIVE</span>
                 <h3>Cloud Infrastructure</h3>
                 <p>Server health monitoring, database management, and API gateway controls.</p>
             </div>
-            <div class="card">
-                <span class="status" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">MAINTENANCE</span>
+            
+            <a href="payments.html" class="card">
+                <span class="status">ACTIVE</span>
                 <h3>Payment Gateway</h3>
-                <p>Transaction processing and financial reporting dashboard. Currently updating.</p>
-            </div>
+                <p>Transaction processing and financial reporting dashboard. System fully operational.</p>
+            </a>
+            
         </div>
     </div>
 </body>

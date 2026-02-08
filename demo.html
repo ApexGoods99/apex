@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live AI Demo | Apex Goods</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #fff; padding: 2rem; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
+        .container { width: 100%; max-width: 500px; }
+        
+        h1 { font-size: 1.5rem; text-align: center; margin-bottom: 2rem; color: #38bdf8; }
+        
+        .input-box { width: 100%; height: 120px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; padding: 1rem; font-family: sans-serif; font-size: 1rem; resize: none; margin-bottom: 1rem; }
+        .input-box:focus { outline: none; border-color: #38bdf8; background: rgba(255,255,255,0.1); }
+        
+        .btn { width: 100%; background: #38bdf8; color: #000; padding: 15px; border: none; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.2s; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+        .btn:active { transform: scale(0.98); }
+
+        /* THE OUTPUT CARD (Hidden at first) */
+        .result-card { display: none; background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; margin-top: 2rem; animation: slideUp 0.5s ease; }
+        
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .ticket-id { font-family: monospace; color: #94a3b8; }
+        .badge { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        .row { display: flex; margin-bottom: 10px; }
+        .label { color: #64748b; width: 80px; font-size: 0.9rem; }
+        .val { font-weight: bold; color: #fff; }
+
+        .ai-note { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #334155; font-size: 0.8rem; color: #a78bfa; font-style: italic; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Unstructured Data Engine</h1>
+        <p style="text-align: center; color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9rem;">Type a messy request below (e.g., "Need a plumber at 450 Highland Ave asap, sink is leaking, call Steve")</p>
+
+        <textarea id="messyInput" class="input-box" placeholder="Paste messy text here..."></textarea>
+        <button onclick="processData()" class="btn">⚡ GENERATE TICKET</button>
+
+        <div id="result" class="result-card">
+            <div class="card-header">
+                <span class="ticket-id">TICKET #8821</span>
+                <span class="badge">PRIORITY: HIGH</span>
+            </div>
+            
+            <div class="row">
+                <div class="label">LOCATION</div>
+                <div class="val" id="outLoc">...</div>
+            </div>
+            <div class="row">
+                <div class="label">ISSUE</div>
+                <div class="val" id="outIssue">...</div>
+            </div>
+            <div class="row">
+                <div class="label">CONTACT</div>
+                <div class="val" id="outContact">...</div>
+            </div>
+            <div class="row">
+                <div class="label">ACTION</div>
+                <div class="val" style="color: #38bdf8;">Dispatching Field Unit</div>
+            </div>
+
+            <div class="ai-note">
+                ✨ AI extracted 4 data points and auto-scheduled the task.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function processData() {
+            const input = document.getElementById('messyInput').value;
+            const card = document.getElementById('result');
+            
+            if(input.length < 5) { alert("Please type something first."); return; }
+
+            // SIMULATED AI EXTRACTION LOGIC
+            // This is a "fake" parser for the demo that looks smart.
+            
+            // 1. Find Location (Looks for "Ave", "St", "Rd" or numbers)
+            let location = "Unknown Location";
+            if (input.match(/\d+\s[A-Za-z]+\s(St|Ave|Rd|Blvd|Ln|Dr)/i)) {
+                location = input.match(/\d+\s[A-Za-z]+\s(St|Ave|Rd|Blvd|Ln|Dr)/i)[0];
+            } else if (input.match(/at\s(.*?)(,|$)/)) {
+                location = input.match(/at\s(.*?)(,|$)/)[1];
+            }
+
+            // 2. Find Issue (Looks for keywords)
+            let issue = "General Maintenance";
+            if (input.includes("leak")) issue = "Plumbing / Water Leak";
+            else if (input.includes("stuck")) issue = "Mechanical Failure";
+            else if (input.includes("broken")) issue = "Damage Repair";
+            else if (input.includes("power") || input.includes("light")) issue = "Electrical Issue";
+
+            // 3. Find Name (Looks for capitalized words or "Call X")
+            let contact = "Tenant";
+            if (input.match(/call\s([A-Z][a-z]+)/i)) {
+                contact = input.match(/call\s([A-Z][a-z]+)/i)[1];
+            }
+
+            // Update UI
+            document.getElementById('outLoc').innerText = location.toUpperCase();
+            document.getElementById('outIssue').innerText = issue.toUpperCase();
+            document.getElementById('outContact').innerText = contact.toUpperCase();
+
+            // Show Card
+            card.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

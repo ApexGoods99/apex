@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Directory | Apex Goods</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #0b1120; color: #fff; line-height: 1.6; }
+        .nav { padding: 1.5rem 5%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(11, 17, 32, 0.9); }
+        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; text-decoration: none; color: #fff; }
+        .back-link { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
+
+        .container { max-width: 900px; margin: 4rem auto; padding: 0 2rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.lead { color: #94a3b8; font-size: 1.1rem; margin-bottom: 4rem; max-width: 600px; }
+
+        /* DEPARTMENT GRID */
+        .dept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
+        .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 2rem; border-radius: 12px; transition: 0.2s; }
+        .dept-card:hover { border-color: #38bdf8; transform: translateY(-3px); background: rgba(255,255,255,0.05); }
+        
+        .dept-name { color: #38bdf8; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 0.5rem; display: block; }
+        .dept-header { font-size: 1.4rem; font-weight: bold; margin-bottom: 0.5rem; color: #fff; }
+        .dept-desc { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem; height: 40px; }
+        
+        .action-link { text-decoration: none; color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 4px; font-size: 0.9rem; transition: 0.2s; display: inline-block; }
+        .action-link:hover { background: #fff; color: #000; border-color: #fff; }
+
+        /* FOOTER INFO */
+        .hq-info { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; display: flex; flex-wrap: wrap; gap: 4rem; color: #94a3b8; font-size: 0.9rem; }
+        .info-col strong { color: #fff; display: block; margin-bottom: 0.5rem; font-size: 1rem; }
+        .phone-link { color: #38bdf8; text-decoration: none; font-size: 1.1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <a href="index.html" class="logo">APEX GOODS</a>
+        <a href="index.html" class="back-link">Close Directory &times;</a>
+    </nav>
+
+    <div class="container">
+        <h1>Corporate Directory.</h1>
+        <p class="lead">Route your inquiry to the appropriate division for expedited processing. Standard response time is 4 hours.</p>
+
+        <div class="dept-grid">
+            
+            <div class="dept-card">
+                <span class="dept-name">Front Desk</span>
+                <div class="dept-header">General Inquiries</div>
+                <div class="dept-desc">For new project scoping, partnership requests, and media relations.</div>
+                <a href="mailto:info@apexgoods.onmicrosoft.com" class="action-link">Contact Support &rarr;</a>
+            </div>
+
+            <div class="dept-card">
+                <span class="dept-name">Operations</span>
+                <div class="dept-header">Logistics Dispatch</div>
+                <div class="dept-desc">Vendor coordination, shipment tracking, and route management.</div>
+                <a href="mailto:dispatch@apexgoods.onmicrosoft.com" class="action-link">Contact Dispatch &rarr;</a>
+            </div>
+
+            <div class="dept-card">
+                <span class="dept-name">Finance</span>
+                <div class="dept-header">Billing & Accounts</div>
+                <div class="dept-desc">Invoice queries, remittance advice, and vendor payments.</div>
+                <a href="mailto:billing@apexgoods.onmicrosoft.com" class="action-link">Contact Finance &rarr;</a>
+            </div>
+
+            <div class="dept-card">
+                <span class="dept-name">Human Resources</span>
+                <div class="dept-header">Careers</div>
+                <div class="dept-desc">Submit resumes for open positions in development and logistics.</div>
+                <a href="mailto:careers@apexgoods.onmicrosoft.com" class="action-link">Submit Application &rarr;</a>
+            </div>
+
+        </div>
+
+        <div class="hq-info">
+            <div class="info-col">
+                <strong>Global Headquarters</strong>
+                San Bernardino, CA<br>
+                United States
+            </div>
+            <div class="info-col">
+                <strong>Priority Dispatch Line</strong>
+                <a href="tel:6263141458" class="phone-link">(626) 314-1458</a>
+            </div>
+            <div class="info-col">
+                <strong>Office Hours</strong>
+                Mon-Fri: 08:00 - 18:00 PST<br>
+                Sat: 09:00 - 14:00 PST
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

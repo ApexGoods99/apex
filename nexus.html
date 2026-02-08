@@ -3,92 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Nexus | Universal Logic Engine</title>
+    <title>Apex Nexus | Enterprise Logic Engine</title>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', monospace; background: #0b1120; color: #fff; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        :root { --bg: #0f172a; --panel: #1e293b; --border: #334155; --accent: #38bdf8; --text-main: #f1f5f9; --text-dim: #94a3b8; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar { width: 260px; background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem; }
+        .brand { font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; color: #fff; margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; }
+        .brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
         
-        /* HEADER */
-        header { padding: 1rem 2rem; border-bottom: 1px solid #1e293b; background: #0f172a; display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-weight: 800; letter-spacing: 1px; color: #fff; font-size: 1.2rem; }
-        .mode-badge { background: #334155; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; color: #94a3b8; font-weight: bold; text-transform: uppercase; border: 1px solid #475569; }
-        .mode-badge.active { color: #38bdf8; border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+        .nav-group { margin-bottom: 2rem; }
+        .nav-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-dim); font-weight: bold; margin-bottom: 0.8rem; letter-spacing: 1px; }
+        .nav-item { display: flex; align-items: center; padding: 10px 12px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; transition: 0.2s; color: var(--text-dim); font-size: 0.9rem; }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .nav-item.active { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.2); font-weight: 600; }
+        .nav-icon { margin-right: 10px; width: 20px; text-align: center; }
 
-        /* INDUSTRY SELECTOR */
-        .selector-bar { display: flex; gap: 10px; padding: 1rem 2rem; overflow-x: auto; background: #0b1120; border-bottom: 1px solid #1e293b; }
-        .ind-btn { background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 8px 16px; border-radius: 50px; cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 0.9rem; }
-        .ind-btn:hover { border-color: #fff; color: #fff; }
-        .ind-btn.active { background: #38bdf8; color: #000; border-color: #38bdf8; font-weight: bold; }
-
-        /* MAIN TERMINAL */
-        .terminal { flex-grow: 1; padding: 2rem; overflow-y: auto; font-family: 'Courier New', monospace; background: #000; }
-        .log { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.4; opacity: 0; animation: fadeIn 0.3s forwards; }
+        /* MAIN CONTENT */
+        .main { flex-grow: 1; display: flex; flex-direction: column; background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 60%); }
         
-        /* COLORS */
-        .ts { color: #555; font-size: 0.8rem; margin-right: 10px; }
-        .agent-planner { color: #a78bfa; font-weight: bold; }
-        .agent-exec { color: #38bdf8; font-weight: bold; }
-        .agent-audit { color: #34d399; font-weight: bold; }
-        .input-text { color: #fff; border-left: 2px solid #fff; padding-left: 10px; margin: 10px 0; font-style: italic; opacity: 0.7; }
+        /* TOP BAR */
+        .top-bar { padding: 1rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); }
+        .status-badge { background: #064e3b; color: #34d399; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; border: 1px solid #059669; display: flex; align-items: center; gap: 6px; }
+        .pulse { width: 6px; height: 6px; background: #34d399; border-radius: 50%; animation: pulse 1.5s infinite; }
 
-        /* CONTROLS */
-        .controls { padding: 1.5rem 2rem; background: #1e293b; border-top: 1px solid #334155; display: flex; gap: 1rem; }
-        .input-box { flex-grow: 1; background: #0b1120; border: 1px solid #334155; color: #fff; padding: 12px; border-radius: 6px; font-family: inherit; }
-        .run-btn { background: #38bdf8; color: #000; border: none; padding: 12px 30px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        /* DASHBOARD GRID */
+        .dashboard { padding: 2rem; display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; height: 100%; overflow-y: auto; }
+        
+        /* CARDS */
+        .card { background: rgba(30, 41, 59, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
+        .card-header { font-size: 0.9rem; font-weight: bold; color: var(--text-dim); margin-bottom: 1rem; text-transform: uppercase; display: flex; justify-content: space-between; }
+        
+        /* TERMINAL (Center) */
+        .terminal-window { background: #000; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; flex-grow: 1; overflow-y: auto; border: 1px solid #333; }
+        .log-line { margin-bottom: 8px; font-size: 0.9rem; opacity: 0; animation: slideIn 0.2s forwards; }
+        .ts { color: #555; margin-right: 10px; font-size: 0.8rem; }
+        .agent-id { font-weight: bold; margin-right: 10px; }
+        
+        /* INPUT AREA */
+        .input-area { margin-top: 1rem; display: flex; gap: 10px; }
+        .input-field { flex-grow: 1; background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 6px; font-family: 'Segoe UI', sans-serif; }
+        .run-btn { background: var(--accent); color: #000; border: none; padding: 0 24px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .run-btn:hover { background: #7dd3fc; }
 
-        @keyframes fadeIn { to { opacity: 1; } }
+        /* ANALYTICS PANEL (Right) */
+        .metric-box { background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05); }
+        .metric-label { font-size: 0.8rem; color: var(--text-dim); }
+        .metric-val { font-size: 1.5rem; font-weight: bold; color: #fff; margin-top: 5px; }
+        .metric-val.green { color: #34d399; }
+
+        /* AGENT COLORS */
+        .c-plan { color: #a78bfa; }
+        .c-exec { color: #38bdf8; }
+        .c-audit { color: #34d399; }
+        .c-sys { color: #64748b; }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        @keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">APEX NEXUS</div>
-        <div class="mode-badge" id="currentMode">STANDBY MODE</div>
-    </header>
+    <div class="sidebar">
+        <div class="brand"><div class="brand-dot"></div> APEX NEXUS</div>
 
-    <div class="selector-bar">
-        <button class="ind-btn" onclick="setMode('LEGAL')">⚖️ LEGAL</button>
-        <button class="ind-btn" onclick="setMode('MEDICAL')">🏥 MEDICAL</button>
-        <button class="ind-btn" onclick="setMode('CONSTRUCTION')">🔨 CONSTRUCTION</button>
-        <button class="ind-btn" onclick="setMode('LOGISTICS')">🚚 LOGISTICS</button>
-        <button class="ind-btn" onclick="setMode('REAL_ESTATE')">🏠 REAL ESTATE</button>
+        <div class="nav-group">
+            <div class="nav-label">Operations Protocols</div>
+            <div class="nav-item active" onclick="loadMode('LOGISTICS')"><span class="nav-icon">🚚</span> Logistics Dispatch</div>
+            <div class="nav-item" onclick="loadMode('CONSTRUCTION')"><span class="nav-icon">🔨</span> Construction</div>
+            <div class="nav-item" onclick="loadMode('REAL_ESTATE')"><span class="nav-icon">🏠</span> Real Estate</div>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Professional Services</div>
+            <div class="nav-item" onclick="loadMode('LEGAL')"><span class="nav-icon">⚖️</span> Legal Discovery</div>
+            <div class="nav-item" onclick="loadMode('MEDICAL')"><span class="nav-icon">🏥</span> Medical Triage</div>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Corporate Functions</div>
+            <div class="nav-item" onclick="loadMode('FINANCE')"><span class="nav-icon">💳</span> Finance (AP/AR)</div>
+            <div class="nav-item" onclick="loadMode('HR')"><span class="nav-icon">👥</span> HR Screening</div>
+        </div>
     </div>
 
-    <div class="terminal" id="console">
-        <div class="log"><span class="ts">SYSTEM</span> Nexus Core Initialized...</div>
-        <div class="log"><span class="ts">SYSTEM</span> Waiting for Industry Protocol selection...</div>
-    </div>
+    <div class="main">
+        <div class="top-bar">
+            <div style="font-weight: bold; color: var(--accent);" id="active-protocol">LOGISTICS DISPATCH PROTOCOL</div>
+            <div class="status-badge"><div class="pulse"></div> SYSTEM ONLINE</div>
+        </div>
 
-    <div class="controls">
-        <input type="text" class="input-box" id="userInput" placeholder="Select an industry above to auto-fill scenario..." onkeypress="handleEnter(event)">
-        <button class="run-btn" onclick="execute()">EXECUTE</button>
+        <div class="dashboard">
+            <div class="card" style="grid-row: span 2;">
+                <div class="card-header">
+                    <span>Live Agent Orchestration</span>
+                    <span style="font-size: 0.7rem; opacity: 0.5;">HITL ENABLED</span>
+                </div>
+                <div class="terminal-window" id="terminal">
+                    <div class="log-line"><span class="ts">SYSTEM</span> Nexus Core v2.4 Loaded.</div>
+                    <div class="log-line"><span class="ts">SYSTEM</span> Waiting for unstructured data stream...</div>
+                </div>
+                
+                <div class="input-area">
+                    <input type="text" class="input-field" id="userInput" placeholder="Select a protocol on the left to load scenario..." onkeypress="handleEnter(event)">
+                    <button class="run-btn" onclick="execute()">RUN</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Projected Efficiency</div>
+                <div class="metric-box">
+                    <div class="metric-label">Human Time Saved</div>
+                    <div class="metric-val" id="timeSaved">--</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-label">Process Latency</div>
+                    <div class="metric-val green" id="latency">--</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-label">Operational Risk</div>
+                    <div class="metric-val green" id="risk">--</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        let currentIndustry = 'GENERAL';
-        
-        // PRE-SET SCENARIOS FOR DEMOS
-        const scenarios = {
-            'LEGAL': "Client John Doe needs a will. Assets: $1.2M house, vintage car. Beneficiary: Wife Jane. Call him at 555-0199.",
-            'MEDICAL': "Patient Sarah Connor, DOB 11/12/84. High fever 102F. Needs urgent appointment. Insurance: BlueCross.",
-            'CONSTRUCTION': "Need 50 sheets of 5/8 drywall and 10 boxes of screws delivered to 4400 Highland site by Tuesday.",
-            'LOGISTICS': "Unit 404 arrived at Sysco dock 5. Unload time 2 hours. Driver requesting detention pay.",
-            'REAL_ESTATE': "Tenant in 4B says AC is broken. Leaking water on carpet. Needs fix ASAP. Call Mike the plumber."
+        // DATA: The Brain of the System
+        const modes = {
+            'LOGISTICS': {
+                prompt: "Unit 404 arrived at Sysco dock 5. Unload time 2 hours. Driver requesting detention pay.",
+                metrics: { time: "15 mins", lat: "0.4s", risk: "0%" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Identified Entity: Driver 'Unit 404'. Loc: 'Sysco Dock 5'. Intent: Arrival + Detention Request." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Action: Emailing Receiving Dept. Action: Starting Detention Timer (2hr threshold)." },
+                    { agent: "AUDITOR", color: "c-audit", text: "Verification: GPS matches Geofence. Logging timestamp to Payroll DB." }
+                ]
+            },
+            'CONSTRUCTION': {
+                prompt: "Need 50 sheets of 5/8 drywall and 10 boxes of screws delivered to 4400 Highland site by Tuesday.",
+                metrics: { time: "45 mins", lat: "1.2s", risk: "0%" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Identified: Material Procurement. Items: Drywall (50), Screws (10). Deadline: Tuesday." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Drafting PO #9921. Vendor: Home Depot Pro. Scheduling Delivery." },
+                    { agent: "AUDITOR", color: "c-audit", text: "Budget Check: Under $1,000 limit. Auto-Approval Enabled." }
+                ]
+            },
+            'REAL_ESTATE': {
+                prompt: "Tenant in 4B says AC is broken. Leaking water on carpet. Needs fix ASAP. Call Mike the plumber.",
+                metrics: { time: "25 mins", lat: "0.8s", risk: "Low" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Issue: HVAC/Plumbing. Urgency: HIGH (Water Damage). Vendor: 'Mike'." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Creating Work Order #WO-441. Dispatching SMS to Vendor Mike." },
+                    { agent: "AUDITOR", color: "c-audit", text: "Tenant Notice: 'Help is on the way'. Lease Compliance Checked." }
+                ]
+            },
+            'LEGAL': {
+                prompt: "Client John Doe needs a will. Assets: $1.2M house, vintage car. Beneficiary: Wife Jane. Call him at 555-0199.",
+                metrics: { time: "60 mins", lat: "2.1s", risk: "0%" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Case Type: Estate Planning. Asset Value: >$1M. Client: John Doe." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Generating 'Intake Form v4'. Drafting Engagement Letter. Scheduling Consult." },
+                    { agent: "AUDITOR", color: "c-audit", text: "Conflict Check: No prior representation of adverse party 'Jane'." }
+                ]
+            },
+            'MEDICAL': {
+                prompt: "Patient Sarah Connor, DOB 11/12/84. High fever 102F. Needs urgent appointment. Insurance: BlueCross.",
+                metrics: { time: "12 mins", lat: "0.3s", risk: "0%" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Triage Level: 2 (Acute). Symptom: Fever. Insurance: BCBS." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Querying Schedule... Slot Found: Dr. Silberman @ 2:00 PM. Sending Confirmation." },
+                    { agent: "AUDITOR", color: "c-audit", text: "HIPAA Compliance: Data Encrypted. Eligibility Check: Active." }
+                ]
+            },
+            'FINANCE': {
+                prompt: "Invoice attached from Acme Corp for $500 marketing services. Invoice #INV-2024. Due Net 30.",
+                metrics: { time: "10 mins", lat: "0.5s", risk: "0%" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Doc Type: Invoice. Vendor: Acme Corp. Amount: $500.00. Term: Net 30." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Coding to GL: 6001-Marketing. Scheduling Payment Date: +30 days." },
+                    { agent: "AUDITOR", color: "c-audit", text: "3-Way Match: PO matches Invoice. Approval Routing: Manager (Automatic)." }
+                ]
+            },
+            'HR': {
+                prompt: "Candidate application: Alex Chen. 5 years Python experience. Github link attached. Applying for Senior Dev.",
+                metrics: { time: "20 mins", lat: "1.5s", risk: "Low" },
+                steps: [
+                    { agent: "PLANNER", color: "c-plan", text: "Role: Senior Dev. Key Criteria: Python > 4yrs. Candidate: Alex Chen." },
+                    { agent: "EXECUTOR", color: "c-exec", text: "Parsing Resume... Extracting Skills... Auto-Score: 85/100." },
+                    { agent: "AUDITOR", color: "c-audit", text: "Action: Moving to 'Phone Screen' stage. Emailing availability calendar." }
+                ]
+            }
         };
 
-        function setMode(mode) {
-            currentIndustry = mode;
-            document.getElementById('currentMode').innerText = mode + " PROTOCOL";
-            document.getElementById('currentMode').classList.add('active');
-            
-            // Auto-fill the input for a fast demo
-            document.getElementById('userInput').value = scenarios[mode];
-            
-            // Highlight button
-            document.querySelectorAll('.ind-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+        let currentMode = 'LOGISTICS';
 
-            log("SYSTEM", `Switched Logic Engine to [${mode}] Standard.`);
+        function loadMode(mode) {
+            currentMode = mode;
+            
+            // UI Updates
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById('active-protocol').innerText = mode + " PROTOCOL";
+            
+            // Load Prompt
+            const input = document.getElementById('userInput');
+            input.value = modes[mode].prompt;
+            input.focus();
+            
+            // Reset Terminal and Metrics
+            document.getElementById('terminal').innerHTML = `<div class="log-line"><span class="ts">SYSTEM</span> Protocol Switched to ${mode}. Ready.</div>`;
+            document.getElementById('timeSaved').innerText = "--";
+            document.getElementById('latency').innerText = "--";
+            document.getElementById('risk').innerText = "--";
         }
 
         function handleEnter(e) {
@@ -96,61 +224,43 @@
         }
 
         function execute() {
-            const input = document.getElementById('userInput').value;
-            if(!input) return;
-
-            // Clear input for effect
-            document.getElementById('userInput').value = '';
+            const inputVal = document.getElementById('userInput').value;
+            if (!inputVal) return;
             
-            // 1. Show Input
-            const terminal = document.getElementById('console');
-            terminal.innerHTML += `<div class="input-text">INPUT: "${input}"</div>`;
+            // Clear Input
+            document.getElementById('userInput').value = "";
+            const terminal = document.getElementById('terminal');
             
-            // 2. Run the "Agents"
-            runSequence(input);
-        }
+            // Show User Input
+            terminal.innerHTML += `<div class="log-line" style="color:#fff; opacity:0.8;">> INPUT: "${inputVal}"</div>`;
+            
+            // Get Data
+            const data = modes[currentMode];
+            let delay = 500;
 
-        function runSequence(text) {
-            // STEP 1: PLANNER
+            // Run Sequence
+            data.steps.forEach(step => {
+                setTimeout(() => {
+                    terminal.innerHTML += `
+                        <div class="log-line">
+                            <span class="ts">${new Date().toLocaleTimeString()}</span>
+                            <span class="agent-id ${step.color}">[${step.agent}]</span>
+                            ${step.text}
+                        </div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, delay);
+                delay += 1200;
+            });
+
+            // Update Metrics at the end
             setTimeout(() => {
-                let plan = "Analyzing unstructured text...";
-                if(currentIndustry === 'LEGAL') plan = "Identified: Estate Planning. Entities: Assets, Beneficiary.";
-                if(currentIndustry === 'MEDICAL') plan = "Identified: Triage Level 2. Symptom: Fever.";
-                if(currentIndustry === 'CONSTRUCTION') plan = "Identified: Material Procurement. Vendor Match: Home Depot Pro.";
+                terminal.innerHTML += `<div class="log-line"><span class="ts">SYSTEM</span> <span class="c-sys">Process Complete. Waiting for Human Sign-off.</span></div>`;
+                terminal.scrollTop = terminal.scrollHeight;
                 
-                log("PLANNER", plan);
-            }, 600);
-
-            // STEP 2: EXECUTOR
-            setTimeout(() => {
-                let exec = "Processing...";
-                if(currentIndustry === 'LEGAL') exec = "Drafting 'Last Will & Testament' v1.pdf...";
-                if(currentIndustry === 'MEDICAL') exec = "Querying Schedule... Slot Found: Dr. Silberman @ 2:00 PM.";
-                if(currentIndustry === 'CONSTRUCTION') exec = "Generating Purchase Order #PO-9921. Sending to Supplier.";
-                if(currentIndustry === 'LOGISTICS') exec = "Emailing Facility: Arrival Confirmed. Starting Detention Timer.";
-                if(currentIndustry === 'REAL_ESTATE') exec = "Creating Work Order #WO-441. Dispatching Vendor: Mike's Plumbing.";
-
-                log("EXECUTOR", exec);
-            }, 1800);
-
-            // STEP 3: AUDITOR
-            setTimeout(() => {
-                log("AUDITOR", "Compliance Check: PASSED. 100% Accuracy.");
-                log("AUDITOR", "Waiting for Human Approval (HITL)...");
-            }, 3000);
-        }
-
-        function log(agent, msg) {
-            const terminal = document.getElementById('console');
-            const time = new Date().toLocaleTimeString();
-            
-            let colorClass = "";
-            if(agent === "PLANNER") colorClass = "agent-planner";
-            if(agent === "EXECUTOR") colorClass = "agent-exec";
-            if(agent === "AUDITOR") colorClass = "agent-audit";
-
-            terminal.innerHTML += `<div class="log"><span class="ts">${time}</span> <span class="${colorClass}">[${agent}]</span> ${msg}</div>`;
-            terminal.scrollTop = terminal.scrollHeight;
+                document.getElementById('timeSaved').innerText = data.metrics.time;
+                document.getElementById('latency').innerText = data.metrics.lat;
+                document.getElementById('risk').innerText = data.metrics.risk;
+            }, delay + 500);
         }
     </script>
 </body>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Goods | 2026 Strategy</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; background: #0f172a; color: #fff; padding: 2rem; }
+        .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .back { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        
+        .timeline { border-left: 2px solid rgba(255,255,255,0.1); padding-left: 2rem; margin-top: 2rem; }
+        .phase { margin-bottom: 3rem; position: relative; }
+        .phase::before { content: ''; position: absolute; left: -2.6rem; top: 5px; width: 1rem; height: 1rem; background: #0f172a; border: 2px solid #38bdf8; border-radius: 50%; }
+        
+        .phase-title { color: #38bdf8; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .phase-header { font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; }
+        .phase-desc { color: #94a3b8; line-height: 1.6; font-size: 0.9rem; }
+        
+        .tag { background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; margin-right: 5px; }
+        .tag.completed { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+        .tag.locked { background: rgba(255, 255, 255, 0.05); color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="portal.html" class="back">&larr; BACK TO PORTAL</a>
+        <div style="font-weight: bold;">STRATEGIC ROADMAP</div>
+    </div>
+
+    <h1 style="margin-bottom: 0.5rem;">Vision 2026</h1>
+    <p style="color: #94a3b8; margin-top: 0;">Executive Execution Plan</p>
+
+    <div class="timeline">
+        
+        <div class="phase">
+            <div class="phase-title">Q1 2026 - COMPLETED</div>
+            <div class="phase-header" style="color: #34d399;">Infrastructure Deployment</div>
+            <p class="phase-desc">
+                <span class="tag completed">DONE</span> Cloud Architecture Setup<br>
+                <span class="tag completed">DONE</span> Global Payment Gateway Integration<br>
+                <span class="tag completed">DONE</span> Executive ID Issuance
+            </p>
+        </div>
+
+        <div class="phase">
+            <div class="phase-title">Q2 2026 - ACTIVE</div>
+            <div class="phase-header">Market Penetration</div>
+            <p class="phase-desc">
+                <span class="tag">IN PROGRESS</span> Vendor Acquisition (California)<br>
+                <span class="tag">PENDING</span> Series A Funding Preparation<br>
+                Scaling logistics throughput to 50k units/mo.
+            </p>
+        </div>
+
+        <div class="phase">
+            <div class="phase-title">Q3 2026 - LOCKED</div>
+            <div class="phase-header" style="color: #64748b;">International Expansion</div>
+            <p class="phase-desc">
+                <span class="tag locked">LOCKED</span> Establishing Tokyo Fulfillment Node<br>
+                <span class="tag locked">LOCKED</span> AI Supply Chain Automation
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
